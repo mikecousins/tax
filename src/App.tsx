@@ -34,6 +34,7 @@ const App = () => {
   const [corporateCash, setCorporateCash] = useState(0);
   const [personalIncome, setPersonalIncome] = useState(0);
   const [personalDividendIncome, setPersonalDividendIncome] = useState(0);
+  const [grossedUpDividendIncome, setGrossedUpDividendIncome] = useState(0);
   const [personalAfterTaxIncome, setPersonalAfterTaxIncome] = useState(0);
 
   useEffect(() => {
@@ -54,6 +55,10 @@ const App = () => {
     setPersonalIncome(corporateCash / 2);
     setPersonalDividendIncome(corporateCash / 2);
   }, [corporateCash]);
+
+  useEffect(() => {
+    setGrossedUpDividendIncome(personalDividendIncome * 1.38);
+  }, [personalDividendIncome]);
 
   useEffect(() => {
     setPersonalAfterTaxIncome(personalIncome * 0.65 + corporateOtherExpenses);
@@ -110,8 +115,16 @@ const App = () => {
           <Input type="text" value={corporateCash} readOnly />
         </Label>
         <Label>
-          Personal Income:
+          Salary Income:
           <Input type="text" value={personalIncome} readOnly />
+        </Label>
+        <Label>
+          Dividend Income:
+          <Input type="text" value={personalDividendIncome} readOnly />
+        </Label>
+        <Label>
+          Grossed Up Dividend Income:
+          <Input type="text" value={grossedUpDividendIncome} readOnly />
         </Label>
         <Label>
           Personal After-tax Income:
