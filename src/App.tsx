@@ -21,6 +21,7 @@ const Label = styled.label`
 const Input = styled.input`
   padding: 5px;
   float: right;
+  background-color: ${props => props.readOnly ? '#eee' : 'white'}
 `;
 
 const App = () => {
@@ -62,7 +63,7 @@ const App = () => {
 
   useEffect(() => {
     setPersonalAfterTaxIncome(personalIncome * 0.65 + corporateOtherExpenses);
-  }, [personalIncome]);
+  }, [personalIncome, corporateOtherExpenses]);
 
   return (
     <Page>
