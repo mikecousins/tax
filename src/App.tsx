@@ -53,9 +53,8 @@ const App = () => {
   }, [corporateProfit, corporateTax]);
 
   useEffect(() => {
-    setPersonalIncome(corporateCash / 2);
-    setPersonalDividendIncome(corporateCash / 2);
-  }, [corporateCash]);
+    setPersonalDividendIncome(corporateCash - personalIncome);
+  }, [corporateCash, personalIncome]);
 
   useEffect(() => {
     setGrossedUpDividendIncome(personalDividendIncome * 1.38);
@@ -117,7 +116,12 @@ const App = () => {
         </Label>
         <Label>
           Salary Income:
-          <Input type="text" value={personalIncome} readOnly />
+          <Input type="text" value={personalIncome} onChange={e => {
+            const parsed = Number.parseInt(e.target.value)
+            if (!isNaN(parsed)) {
+              setPersonalIncome(parsed)}
+            }
+          } />
         </Label>
         <Label>
           Dividend Income:
