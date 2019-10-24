@@ -70,56 +70,56 @@ const App = () => {
             <StatLabel>
               Corporate Profit:
             </StatLabel>
-            <StatNumber>${corporateProfit}</StatNumber>
+            <StatNumber>${corporateProfit.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
               Alberta Corporate Tax:
             </StatLabel>
-            <StatNumber>${albertaCorporateTax}</StatNumber>
+            <StatNumber>${albertaCorporateTax.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
               Federal Corporate Tax:
             </StatLabel>
-            <StatNumber>${federalCorporateTax}</StatNumber>
+            <StatNumber>${federalCorporateTax.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
               Total Corporate Tax:
             </StatLabel>
-            <StatNumber>${corporateTax}</StatNumber>
+            <StatNumber>${corporateTax.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
           <StatLabel>
             Corporate After-tax Cash:
           </StatLabel>
-            <StatNumber>${corporateCash}</StatNumber>
+            <StatNumber>${corporateCash.toLocaleString()}</StatNumber>
           </Stat>
 
           <Stat>
             <StatLabel>
               Dividend Income:
             </StatLabel>
-              <StatNumber>${personalDividendIncome}</StatNumber>
+              <StatNumber>${personalDividendIncome.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
               Grossed Up Dividend Income:
             </StatLabel>
-              <StatNumber>${grossedUpDividendIncome}</StatNumber>
+              <StatNumber>${grossedUpDividendIncome.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
               Personal Pre-tax Income:
             </StatLabel>
-              <StatNumber>${personalPreTaxIncome}</StatNumber>
+              <StatNumber>${personalPreTaxIncome.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
               Personal After-tax Income:
             </StatLabel>
-              <StatNumber>${personalAfterTaxIncome}</StatNumber>
+              <StatNumber>${personalAfterTaxIncome.toLocaleString()}</StatNumber>
           </Stat>
         </Container>
       </Page>
