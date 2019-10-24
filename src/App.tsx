@@ -191,7 +191,7 @@ const App = () => {
           <Box pt={5}>
             <Stack spacing={2}>
               <Badge variantColor={personalIncome > 52000 ? 'green' : 'red'}>{personalIncome > 52000 ? 'Maxes CPP benefits' : 'Does not max CPP benefits'}</Badge>
-              <Badge variantColor={personalIncome > 144000 ? 'green' : 'red'}>{personalIncome > 144000 ? 'Maxes RRSP headroom ($23,500)' : `Does not max RRSP headroom ($${(personalIncome * 0.18).toLocaleString()})`}</Badge>
+              <Badge variantColor={personalIncome > 144000 ? 'green' : 'red'}>{personalIncome > 144000 ? 'Maxes RRSP headroom ($26,500)' : `Does not max RRSP headroom ($${(personalIncome * 0.18).toLocaleString()})`}</Badge>
             </Stack>
           </Box>
         </Container>
