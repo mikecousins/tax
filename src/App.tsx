@@ -17,48 +17,18 @@ const App = () => {
   const [corporateIncome, setCorporateIncome] = useState(100000);
   const [corporatePureExpenses, setCorporatePureExpenses] = useState(10000);
   const [corporateOtherExpenses, setCorporateOtherExpenses] = useState(10000);
-  const [maxSalary, setMaxSalary] = useState(0);
-  const [corporateProfit, setCorporateProfit] = useState(0);
-  const [albertaCorporateTax, setAlbertaCorporateTax] = useState(0);
-  const [federalCorporateTax, setFederalCorporateTax] = useState(0);
-  const [corporateTax, setCorporateTax] = useState(0);
-  const [corporateCash, setCorporateCash] = useState(0);
   const [personalIncome, setPersonalIncome] = useState(0);
-  const [personalDividendIncome, setPersonalDividendIncome] = useState(0);
-  const [grossedUpDividendIncome, setGrossedUpDividendIncome] = useState(0);
-  const [personalPreTaxIncome, setPersonalPreTaxIncome] = useState(0);
-  const [personalAfterTaxIncome, setPersonalAfterTaxIncome] = useState(0);
 
-  useEffect(() => {
-    setMaxSalary(corporateIncome - corporatePureExpenses - corporateOtherExpenses);
-    setCorporateProfit(corporateIncome - corporatePureExpenses - corporateOtherExpenses - personalIncome);
-  }, [corporateIncome, corporatePureExpenses, corporateOtherExpenses, personalIncome]);
-
-  useEffect(() => {
-    setAlbertaCorporateTax(corporateProfit * 0.02);
-    setFederalCorporateTax(corporateProfit * 0.09);
-    setCorporateTax(corporateProfit * 0.11);
-  }, [corporateProfit]);
-
-  useEffect(() => {
-    setCorporateCash(corporateProfit - corporateTax);
-  }, [corporateProfit, corporateTax]);
-
-  useEffect(() => {
-    setPersonalDividendIncome(corporateCash);
-  }, [corporateCash]);
-
-  useEffect(() => {
-    setGrossedUpDividendIncome(personalDividendIncome * 1.38);
-  }, [personalDividendIncome]);
-
-  useEffect(() => {
-    setPersonalPreTaxIncome(personalIncome + grossedUpDividendIncome);
-  })
-
-  useEffect(() => {
-    setPersonalAfterTaxIncome(personalPreTaxIncome * 0.65 + corporateOtherExpenses);
-  }, [personalPreTaxIncome, corporateOtherExpenses]);
+  const maxSalary = corporateIncome - corporatePureExpenses - corporateOtherExpenses;
+  const corporateProfit = corporateIncome - corporatePureExpenses - corporateOtherExpenses - personalIncome;
+  const albertaCorporateTax = corporateProfit * 0.02;
+  const federalCorporateTax = corporateProfit * 0.09;
+  const corporateTax = corporateProfit * 0.11;
+  const corporateCash = corporateProfit - corporateTax;
+  const personalDividendIncome = corporateCash;
+  const grossedUpDividendIncome = personalDividendIncome * 1.38;
+  const personalPreTaxIncome = personalIncome + grossedUpDividendIncome;
+  const personalAfterTaxIncome = personalPreTaxIncome * 0.65 + corporateOtherExpenses;
 
   return (
     <ThemeProvider>
@@ -85,7 +55,7 @@ const App = () => {
           </FormControl>
           <FormControl>
             <FormLabel>Salary Paid Out:</FormLabel>
-            <Slider value={personalIncome} onChange={value => setPersonalIncome(value)} min={0} max={maxSalary}>
+            <Slider value={personalIncome} onChange={value => setPersonalIncome(value)} min={0} max={maxSalary} step={1000}>
               <SliderTrack />
               <SliderFilledTrack />
               <SliderThumb
