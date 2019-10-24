@@ -17,6 +17,7 @@ const App = () => {
   const [corporateIncome, setCorporateIncome] = useState(100000);
   const [corporatePureExpenses, setCorporatePureExpenses] = useState(10000);
   const [corporateOtherExpenses, setCorporateOtherExpenses] = useState(10000);
+  const [maxSalary, setMaxSalary] = useState(0);
   const [corporateProfit, setCorporateProfit] = useState(0);
   const [albertaCorporateTax, setAlbertaCorporateTax] = useState(0);
   const [federalCorporateTax, setFederalCorporateTax] = useState(0);
@@ -25,11 +26,13 @@ const App = () => {
   const [personalIncome, setPersonalIncome] = useState(0);
   const [personalDividendIncome, setPersonalDividendIncome] = useState(0);
   const [grossedUpDividendIncome, setGrossedUpDividendIncome] = useState(0);
+  const [personalPreTaxIncome, setPersonalPreTaxIncome] = useState(0);
   const [personalAfterTaxIncome, setPersonalAfterTaxIncome] = useState(0);
 
   useEffect(() => {
-    setCorporateProfit(corporateIncome - corporatePureExpenses - corporateOtherExpenses);
-  }, [corporateIncome, corporatePureExpenses, corporateOtherExpenses]);
+    setMaxSalary(corporateIncome - corporatePureExpenses - corporateOtherExpenses);
+    setCorporateProfit(corporateIncome - corporatePureExpenses - corporateOtherExpenses - personalIncome);
+  }, [corporateIncome, corporatePureExpenses, corporateOtherExpenses, personalIncome]);
 
   useEffect(() => {
     setAlbertaCorporateTax(corporateProfit * 0.02);
@@ -42,16 +45,20 @@ const App = () => {
   }, [corporateProfit, corporateTax]);
 
   useEffect(() => {
-    setPersonalDividendIncome(corporateCash - personalIncome);
-  }, [corporateCash, personalIncome]);
+    setPersonalDividendIncome(corporateCash);
+  }, [corporateCash]);
 
   useEffect(() => {
     setGrossedUpDividendIncome(personalDividendIncome * 1.38);
   }, [personalDividendIncome]);
 
   useEffect(() => {
-    setPersonalAfterTaxIncome(personalIncome * 0.65 + corporateOtherExpenses);
-  }, [personalIncome, corporateOtherExpenses]);
+    setPersonalPreTaxIncome(personalIncome + grossedUpDividendIncome);
+  })
+
+  useEffect(() => {
+    setPersonalAfterTaxIncome(personalPreTaxIncome * 0.65 + corporateOtherExpenses);
+  }, [personalPreTaxIncome, corporateOtherExpenses]);
 
   return (
     <ThemeProvider>
@@ -75,6 +82,19 @@ const App = () => {
               Other Business Expenses (meals, utilities, hw/sw, etc):
             </FormLabel>
             <NumberInput value={corporateOtherExpenses} onChange={(value: any) => setCorporateOtherExpenses(value)} />
+          </FormControl>
+          <FormControl>
+            <FormLabel>Salary Paid Out:</FormLabel>
+            <Slider value={personalIncome} onChange={value => setPersonalIncome(value)} min={0} max={maxSalary}>
+              <SliderTrack />
+              <SliderFilledTrack />
+              <SliderThumb
+                fontSize="sm"
+                width="72px"
+                height="20px"
+                children={`$${personalIncome}`}
+              />
+            </Slider>
           </FormControl>
           <Stat>
             <StatLabel>
@@ -106,19 +126,7 @@ const App = () => {
           </StatLabel>
             <StatNumber>${corporateCash}</StatNumber>
           </Stat>
-          <FormControl>
-            <FormLabel>Salary Income:</FormLabel>
-            <Slider value={personalIncome} onChange={value => setPersonalIncome(value)} min={0} max={corporateCash}>
-              <SliderTrack />
-              <SliderFilledTrack />
-              <SliderThumb
-                fontSize="sm"
-                width="72px"
-                height="20px"
-                children={`$${personalIncome}`}
-              />
-            </Slider>
-          </FormControl>
+
           <Stat>
             <StatLabel>
               Dividend Income:
@@ -130,6 +138,12 @@ const App = () => {
               Grossed Up Dividend Income:
             </StatLabel>
               <StatNumber>${grossedUpDividendIncome}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Personal Pre-tax Income:
+            </StatLabel>
+              <StatNumber>${personalPreTaxIncome}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
