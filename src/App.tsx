@@ -27,8 +27,12 @@ const App = () => {
   const corporateCash = corporateProfit - corporateTax;
   const personalDividendIncome = corporateCash;
   const grossedUpDividendIncome = personalDividendIncome * 1.38;
-  const personalPreTaxIncome = personalIncome + grossedUpDividendIncome;
-  const personalAfterTaxIncome = personalPreTaxIncome * 0.65 + corporateOtherExpenses;
+  const personalGrossedUpTotalIncome = personalIncome + grossedUpDividendIncome;
+  const personalPreTaxIncome = personalIncome + personalDividendIncome;
+  const personalTaxes = personalGrossedUpTotalIncome * 0.35;
+  const dividendTaxCredit = grossedUpDividendIncome * 0.1;
+  const netTaxes = personalTaxes - dividendTaxCredit;
+  const personalAfterTaxIncome = personalPreTaxIncome - netTaxes + corporateOtherExpenses;
 
   return (
     <ThemeProvider>
@@ -108,6 +112,30 @@ const App = () => {
               Grossed Up Dividend Income:
             </StatLabel>
               <StatNumber>${grossedUpDividendIncome.toLocaleString()}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Grossed Up Total Pre-tax Income:
+            </StatLabel>
+              <StatNumber>${personalGrossedUpTotalIncome.toLocaleString()}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Personal Taxes:
+            </StatLabel>
+              <StatNumber>${personalTaxes.toLocaleString()}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Dividend Tax Credit:
+            </StatLabel>
+              <StatNumber>${dividendTaxCredit.toLocaleString()}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Net Taxes:
+            </StatLabel>
+              <StatNumber>${netTaxes.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
