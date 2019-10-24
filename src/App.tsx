@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { ThemeProvider, CSSReset, FormLabel, FormControl, Slider, SliderTrack, SliderFilledTrack, SliderThumb, NumberInput, Stat, StatLabel, StatNumber } from '@chakra-ui/core';
 import styled from '@emotion/styled';
 
@@ -12,6 +12,38 @@ const Container = styled.div`
   max-width: 600px;
   margin: 0 auto;
 `;
+
+const calculateProvincialTax = (income: number): number => {
+  if (income > 320597) {
+    return (income - 320597) * 0.15 + calculateProvincialTax(320597);
+  }
+  if (income > 213731) {
+    return (income - 213731) * 0.14 + calculateProvincialTax(213731);
+  }
+  if (income > 160298) {
+    return (income - 160298) * 0.13 + calculateProvincialTax(160298);
+  }
+  if (income > 133582) {
+    return (income - 133582) * 0.12 + calculateProvincialTax(133582);
+  }
+  return income * 0.1;
+}
+
+const calculateFederalTax = (income: number): number => {
+  if (income > 210371) {
+    return (income - 210371) * 0.33 + calculateProvincialTax(210371);
+  }
+  if (income > 147667) {
+    return (income - 147667) * 0.29 + calculateProvincialTax(147667);
+  }
+  if (income > 95259) {
+    return (income - 95259) * 0.26 + calculateProvincialTax(95259);
+  }
+  if (income > 47630) {
+    return (income - 47630) * 0.205 + calculateProvincialTax(47630);
+  }
+  return income * 0.15;
+}
 
 const App = () => {
   const [corporateIncome, setCorporateIncome] = useState(100000);
@@ -29,9 +61,10 @@ const App = () => {
   const grossedUpDividendIncome = personalDividendIncome * 1.38;
   const personalGrossedUpTotalIncome = personalIncome + grossedUpDividendIncome;
   const personalPreTaxIncome = personalIncome + personalDividendIncome;
-  const personalTaxes = personalGrossedUpTotalIncome * 0.35;
+  const federalTax = calculateFederalTax(personalGrossedUpTotalIncome);
+  const provincialTax = calculateProvincialTax(personalGrossedUpTotalIncome);
   const dividendTaxCredit = grossedUpDividendIncome * 0.1;
-  const netTaxes = personalTaxes - dividendTaxCredit;
+  const netTaxes = federalTax + provincialTax - dividendTaxCredit;
   const personalAfterTaxIncome = personalPreTaxIncome - netTaxes + corporateOtherExpenses;
 
   return (
@@ -121,9 +154,15 @@ const App = () => {
           </Stat>
           <Stat>
             <StatLabel>
-              Personal Taxes:
+              Federal Taxes:
             </StatLabel>
-              <StatNumber>${personalTaxes.toLocaleString()}</StatNumber>
+              <StatNumber>${federalTax.toLocaleString()}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Provincial Taxes:
+            </StatLabel>
+              <StatNumber>${provincialTax.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
