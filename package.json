@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@emotion/core": "^10.0.22",
-    "@emotion/styled": "^10.0.22",
-    "@reach/slider": "^0.4.0",
-    "prop-types": "^15.7.2",
-    "react": "^16.11.0",
-    "react-dom": "^16.11.0",
+    "@chakra-ui/core": "^0.4.1",
+    "@emotion/core": "10.0.22",
+    "@emotion/styled": "10.0.22",
+    "@reach/slider": "0.4.0",
+    "emotion-theming": "^10.0.19",
+    "prop-types": "15.7.2",
+    "react": "16.11.0",
+    "react-dom": "16.11.0",
     "react-scripts": "3.2.0",
-    "typescript": "^3.6.4"
+    "typescript": "3.6.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,8 +36,8 @@
     ]
   },
   "devDependencies": {
-    "@types/jest": "^24.0.19",
-    "@types/react": "^16.9.9",
-    "@types/react-dom": "^16.9.2"
+    "@types/jest": "24.0.19",
+    "@types/react": "16.9.10",
+    "@types/react-dom": "16.9.2"
   }
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeProvider, CSSReset, FormLabel, FormControl, Slider, SliderTrack, SliderFilledTrack, SliderThumb, NumberInput, Stat, StatLabel, StatNumber } from '@chakra-ui/core';
 import styled from '@emotion/styled';
 
 const Page = styled.div`
@@ -10,18 +11,6 @@ const Container = styled.div`
   flex: 1;
   max-width: 600px;
   margin: 0 auto;
-`;
-
-const Label = styled.label`
-  display: block;
-  margin: 10px 0px;
-  width: 100%;
-`;
-
-const Input = styled.input`
-  padding: 5px;
-  float: right;
-  background-color: ${props => props.readOnly ? '#eee' : 'white'}
 `;
 
 const App = () => {
@@ -65,78 +54,92 @@ const App = () => {
   }, [personalIncome, corporateOtherExpenses]);
 
   return (
-    <Page>
-      <Container>
-        <Label>
-          Business Income:
-          <Input type="text" value={corporateIncome} onChange={e => {
-            const parsed = Number.parseInt(e.target.value)
-            if (!isNaN(parsed)) {
-              setCorporateIncome(parsed)}
-            }
-          } />
-        </Label>
-        <Label>
-          Pure Business Expenses (accountants, filings, etc):
-          <Input type="text" value={corporatePureExpenses} onChange={e => {
-            const parsed = Number.parseInt(e.target.value)
-            if (!isNaN(parsed)) {
-              setCorporatePureExpenses(parsed)}
-            }
-          } />
-        </Label>
-        <Label>
-          Other Business Expenses (meals, utilities, hw/sw, etc):
-          <Input type="text" value={corporateOtherExpenses} onChange={e => {
-            const parsed = Number.parseInt(e.target.value)
-            if (!isNaN(parsed)) {
-              setCorporateOtherExpenses(parsed)}
-            }
-          } />
-        </Label>
-        <Label>
-          Corporate Profit:
-          <Input type="text" value={corporateProfit} readOnly />
-        </Label>
-        <Label>
-          Alberta Corporate Tax:
-          <Input type="text" value={albertaCorporateTax} readOnly />
-        </Label>
-        <Label>
-          Federal Corporate Tax:
-          <Input type="text" value={federalCorporateTax} readOnly />
-        </Label>
-        <Label>
-          Total Corporate Tax:
-          <Input type="text" value={corporateTax} readOnly />
-        </Label>
-        <Label>
-          Corporate After-tax Cash:
-          <Input type="text" value={corporateCash} readOnly />
-        </Label>
-        <Label>
-          Salary Income:
-          <Input type="text" value={personalIncome} onChange={e => {
-            const parsed = Number.parseInt(e.target.value)
-            if (!isNaN(parsed)) {
-              setPersonalIncome(parsed)}
-            }
-          } />
-        </Label>
-        <Label>
-          Dividend Income:
-          <Input type="text" value={personalDividendIncome} readOnly />
-        </Label>
-        <Label>
-          Grossed Up Dividend Income:
-          <Input type="text" value={grossedUpDividendIncome} readOnly />
-        </Label>
-        <Label>
-          Personal After-tax Income:
-          <Input type="text" value={personalAfterTaxIncome} readOnly />
-        </Label>
-      </Container>
-    </Page>
+    <ThemeProvider>
+      <CSSReset />
+      <Page>
+        <Container>
+          <FormControl>
+            <FormLabel>
+              Business Income:
+            </FormLabel>
+            <NumberInput value={corporateIncome} onChange={(value: any) => setCorporateIncome(value)} />
+          </FormControl>
+          <FormControl>
+            <FormLabel>
+              Pure Business Expenses (accountants, filings, etc):
+            </FormLabel>  
+            <NumberInput value={corporatePureExpenses} onChange={(value: any) => setCorporatePureExpenses(value)} />
+          </FormControl>
+          <FormControl>
+            <FormLabel>
+              Other Business Expenses (meals, utilities, hw/sw, etc):
+            </FormLabel>
+            <NumberInput value={corporateOtherExpenses} onChange={(value: any) => setCorporateOtherExpenses(value)} />
+          </FormControl>
+          <Stat>
+            <StatLabel>
+              Corporate Profit:
+            </StatLabel>
+            <StatNumber>${corporateProfit}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Alberta Corporate Tax:
+            </StatLabel>
+            <StatNumber>${albertaCorporateTax}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Federal Corporate Tax:
+            </StatLabel>
+            <StatNumber>${federalCorporateTax}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Total Corporate Tax:
+            </StatLabel>
+            <StatNumber>${corporateTax}</StatNumber>
+          </Stat>
+          <Stat>
+          <StatLabel>
+            Corporate After-tax Cash:
+          </StatLabel>
+            <StatNumber>${corporateCash}</StatNumber>
+          </Stat>
+          <FormControl>
+            <FormLabel>Salary Income:</FormLabel>
+            <Slider value={personalIncome} onChange={value => setPersonalIncome(value)} min={0} max={corporateCash}>
+              <SliderTrack />
+              <SliderFilledTrack />
+              <SliderThumb
+                fontSize="sm"
+                width="72px"
+                height="20px"
+                children={`$${personalIncome}`}
+              />
+            </Slider>
+          </FormControl>
+          <Stat>
+            <StatLabel>
+              Dividend Income:
+            </StatLabel>
+              <StatNumber>${personalDividendIncome}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Grossed Up Dividend Income:
+            </StatLabel>
+              <StatNumber>${grossedUpDividendIncome}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Personal After-tax Income:
+            </StatLabel>
+              <StatNumber>${personalAfterTaxIncome}</StatNumber>
+          </Stat>
+        </Container>
+      </Page>
+    </ThemeProvider>
   );
 }
 
