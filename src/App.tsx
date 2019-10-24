@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ThemeProvider, CSSReset, FormLabel, FormControl, Slider, SliderTrack, SliderFilledTrack, SliderThumb, NumberInput, Stat, StatLabel, StatNumber } from '@chakra-ui/core';
+import { ThemeProvider, CSSReset, FormLabel, FormControl, Slider, SliderTrack, SliderFilledTrack, SliderThumb, NumberInput, Stat, StatLabel, StatNumber, Badge, Stack, Box } from '@chakra-ui/core';
 import styled from '@emotion/styled';
 
 const Page = styled.div`
@@ -188,6 +188,12 @@ const App = () => {
             </StatLabel>
               <StatNumber>${personalAfterTaxIncome.toLocaleString()}</StatNumber>
           </Stat>
+          <Box pt={5}>
+            <Stack spacing={2}>
+              <Badge variantColor={personalIncome > 52000 ? 'green' : 'red'}>{personalIncome > 52000 ? 'Maxes CPP benefits' : 'Does not max CPP benefits'}</Badge>
+              <Badge variantColor={personalIncome > 144000 ? 'green' : 'red'}>{personalIncome > 144000 ? 'Maxes RRSP headroom' : 'Does not max RRSP headroom'}</Badge>
+            </Stack>
+          </Box>
         </Container>
       </Page>
     </ThemeProvider>
