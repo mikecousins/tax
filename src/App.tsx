@@ -58,12 +58,12 @@ const App = () => {
   const corporateTax = corporateProfit * 0.11;
   const corporateCash = corporateProfit - corporateTax;
   const personalDividendIncome = corporateCash;
-  const grossedUpDividendIncome = personalDividendIncome * 1.38;
+  const grossedUpDividendIncome = personalDividendIncome * 1.15;
   const personalGrossedUpTotalIncome = personalIncome + grossedUpDividendIncome;
   const personalPreTaxIncome = personalIncome + personalDividendIncome;
   const federalTax = calculateFederalTax(personalGrossedUpTotalIncome);
   const provincialTax = calculateProvincialTax(personalGrossedUpTotalIncome);
-  const dividendTaxCredit = grossedUpDividendIncome * 0.1;
+  const dividendTaxCredit = grossedUpDividendIncome * 0.0218;
   const netTaxes = federalTax + provincialTax - dividendTaxCredit;
   const personalAfterTaxIncome = personalPreTaxIncome - netTaxes + corporateOtherExpenses;
 
