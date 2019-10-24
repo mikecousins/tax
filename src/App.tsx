@@ -54,7 +54,7 @@ const App = () => {
             <NumberInput value={corporateOtherExpenses} onChange={(value: any) => setCorporateOtherExpenses(value)} />
           </FormControl>
           <FormControl>
-            <FormLabel>Salary Paid Out:</FormLabel>
+            <FormLabel>Salary Paid Out ($0-{maxSalary.toLocaleString()}):</FormLabel>
             <Slider value={personalIncome} onChange={value => setPersonalIncome(value)} min={0} max={maxSalary} step={1000}>
               <SliderTrack />
               <SliderFilledTrack />
