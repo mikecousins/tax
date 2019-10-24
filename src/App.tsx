@@ -46,7 +46,7 @@ const calculateFederalTax = (income: number): number => {
 }
 
 const App = () => {
-  const [corporateIncome, setCorporateIncome] = useState(100000);
+  const [corporateIncome, setCorporateIncome] = useState(200000);
   const [corporatePureExpenses, setCorporatePureExpenses] = useState(10000);
   const [corporateOtherExpenses, setCorporateOtherExpenses] = useState(10000);
   const [personalIncome, setPersonalIncome] = useState(0);
