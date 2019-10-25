@@ -31,16 +31,16 @@ const calculateProvincialTax = (income: number): number => {
 
 const calculateFederalTax = (income: number): number => {
   if (income > 210371) {
-    return (income - 210371) * 0.33 + calculateProvincialTax(210371);
+    return (income - 210371) * 0.33 + calculateFederalTax(210371);
   }
   if (income > 147667) {
-    return (income - 147667) * 0.29 + calculateProvincialTax(147667);
+    return (income - 147667) * 0.29 + calculateFederalTax(147667);
   }
   if (income > 95259) {
-    return (income - 95259) * 0.26 + calculateProvincialTax(95259);
+    return (income - 95259) * 0.26 + calculateFederalTax(95259);
   }
   if (income > 47630) {
-    return (income - 47630) * 0.205 + calculateProvincialTax(47630);
+    return (income - 47630) * 0.205 + calculateFederalTax(47630);
   }
   return income * 0.15;
 }
