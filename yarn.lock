@@ -1245,29 +1245,29 @@
   resolved "https://registry.yarnpkg.com/@reach/auto-id/-/auto-id-0.2.0.tgz#97f9e48fe736aa5c6f4f32cf73c1f19d005f8550"
   integrity sha512-lVK/svL2HuQdp7jgvlrLkFsUx50Az9chAhxpiPwBqcS83I2pVWvXp98FOcSCCJCV++l115QmzHhFd+ycw1zLBg==
 
-"@reach/auto-id@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@reach/auto-id/-/auto-id-0.4.0.tgz#7241b4f26092b65dd43c325c278a82efd210ad02"
-  integrity sha512-tWjH+lxmGONcpbxxKHGMUZ2mw+GVvS9YE2eYV2AH+xxcf6b/Q+KC1FlBtS7eYw9y7tONvTAivVVyZSz86a8HKw==
+"@reach/auto-id@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@reach/auto-id/-/auto-id-0.6.1.tgz#af30c153787a335cfb258289537d5ea355688821"
+  integrity sha512-t3uhdZwalO3Mph+CUdFIvMcYsMtRZoBHE5rw/+3UvQxV+AeQGNqmtlOix9mq3rOpxi0KEaf1q4CjWx4myFXkRQ==
 
 "@reach/component-component@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@reach/component-component/-/component-component-0.1.3.tgz#5d156319572dc38995b246f81878bc2577c517e5"
   integrity sha512-a1USH7L3bEfDdPN4iNZGvMEFuBfkdG+QNybeyDv8RloVFgZYRoM+KGXyy2KOfEnTUM8QWDRSROwaL3+ts5Angg==
 
-"@reach/slider@0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@reach/slider/-/slider-0.4.0.tgz#2971d4adcea35e86ed599707d6dd0acd53e31dd9"
-  integrity sha512-NA5ybfrdf0rY0/+GdfiXWm6TuQf71S68u5FL9s+qwazPc931PVu67UlG3h4MK5H8NFL/YVXg/Ve8hAZM41J25w==
+"@reach/slider@0.6.2":
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/@reach/slider/-/slider-0.6.2.tgz#bc4dbc650b6be9f9270375de891693c1f882a116"
+  integrity sha512-h+ZIxd/ENG4MYF+oWvUTl9u6HCQOkI95zpBp0E6J8B8v4onjUMt0AR5QONwURf3L26XDd5voJXPZcUOhMS9mIA==
   dependencies:
-    "@reach/auto-id" "^0.4.0"
-    "@reach/utils" "^0.4.0"
+    "@reach/auto-id" "^0.6.1"
+    "@reach/utils" "^0.6.1"
     warning "^4.0.3"
 
-"@reach/utils@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.4.0.tgz#444f3b7384fc0adbe6f3787adb68befd42969b72"
-  integrity sha512-GBvIj0kTQIZpH5YnBmlq80qssJvF7NCf8/GgatNv+dQtBJflbC0qjXmVext9HQN+tajRXxmsGol3LK9SbEAWGw==
+"@reach/utils@^0.6.1":
+  version "0.6.1"
+  resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.6.1.tgz#7345dcd624f92779fb4a0fc4a28ab16d69b53476"
+  integrity sha512-SMGDydSjmvOz3Q4faGGJikdeqHumHmxB1YfYR7XTWrDQxJMod+J7mSkaS12NY4o/uPQ4xOwwL6cXWN+KpFjOQg==
 
 "@reach/visually-hidden@^0.1.4":
   version "0.1.4"
