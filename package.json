@@ -5,7 +5,7 @@
   "dependencies": {
     "@chakra-ui/core": "^0.5.2",
     "@emotion/core": "10.0.22",
-    "@emotion/styled": "10.0.22",
+    "@emotion/styled": "10.0.23",
     "@reach/slider": "0.7.0",
     "emotion-theming": "^10.0.19",
     "prop-types": "15.7.2",
