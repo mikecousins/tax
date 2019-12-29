@@ -13,22 +13,26 @@ const Container = styled.div`
   margin: 0 auto;
 `;
 
+
+// 2020: https://www.taxtips.ca/taxrates/ab.htm 
 const calculateProvincialTax = (income: number): number => {
-  if (income > 320597) {
-    return (income - 320597) * 0.15 + calculateProvincialTax(320597);
+  if (income > 314928) {
+    return (income - 314928) * 0.15 + calculateProvincialTax(314928);
   }
-  if (income > 213731) {
-    return (income - 213731) * 0.14 + calculateProvincialTax(213731);
+  if (income > 209952) {
+    return (income - 209952) * 0.14 + calculateProvincialTax(209952);
   }
-  if (income > 160298) {
-    return (income - 160298) * 0.13 + calculateProvincialTax(160298);
+  if (income > 157464) {
+    return (income - 157464) * 0.13 + calculateProvincialTax(157464);
   }
-  if (income > 133582) {
-    return (income - 133582) * 0.12 + calculateProvincialTax(133582);
+  if (income > 131220) {
+    return (income - 131220) * 0.12 + calculateProvincialTax(131220);
   }
   return income * 0.1;
 }
 
+
+// 2020:  https://www.taxtips.ca/taxrates/canada.htm
 const calculateFederalTax = (income: number): number => {
   if (income > 210371) {
     return (income - 210371) * 0.33 + calculateFederalTax(210371);
@@ -51,20 +55,34 @@ const App = () => {
   const [corporateOtherExpenses, setCorporateOtherExpenses] = useState(10000);
   const [personalIncome, setPersonalIncome] = useState(0);
 
+  const maxCppAmount = 58700; // https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html
+  const maxEiAmount = 54200; // https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html
   const maxSalary = corporateIncome - corporatePureExpenses - corporateOtherExpenses;
   const corporateProfit = corporateIncome - corporatePureExpenses - corporateOtherExpenses - personalIncome;
-  const albertaCorporateTax = corporateProfit * 0.02;
-  const federalCorporateTax = corporateProfit * 0.09;
-  const corporateTax = corporateProfit * 0.11;
+  const albertaCorporateTax = corporateProfit * 0.02; // https://www.taxtips.ca/smallbusiness/corporatetax/corporate-tax-rates-2019.htm
+  const federalCorporateTax = corporateProfit * 0.09; // https://www.taxtips.ca/smallbusiness/corporatetax/corporate-tax-rates-2019.htm
+  const corporateTax = albertaCorporateTax + federalCorporateTax;
   const corporateCash = corporateProfit - corporateTax;
   const personalDividendIncome = corporateCash;
   const grossedUpDividendIncome = personalDividendIncome * 1.15;
   const personalGrossedUpTotalIncome = personalIncome + grossedUpDividendIncome;
   const personalPreTaxIncome = personalIncome + personalDividendIncome;
-  const federalTax = calculateFederalTax(personalGrossedUpTotalIncome);
-  const provincialTax = calculateProvincialTax(personalGrossedUpTotalIncome);
-  const dividendTaxCredit = grossedUpDividendIncome * 0.0218;
-  const netTaxes = federalTax + provincialTax - dividendTaxCredit;
+
+  // https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html
+  const cpp = Math.max(0, Math.min(personalIncome, maxCppAmount) - 3500) * .0525; // Should maybe be 2x this if corporation has to pay too? I think there was an exemption for that
+  // https://www.canada.ca/en/employment-social-development/programs/ei/ei-list/reports/premium/rates2020.html
+  const ei = Math.max(0, Math.min(personalIncome, maxEiAmount)) * .0158; // Should be more if employer pays too?
+  const payrollTaxes = cpp + ei;
+
+  const federalTaxBeforePersonalAmount = calculateFederalTax(personalGrossedUpTotalIncome);
+  const canadaEmploymentAmountTaxCredit = Math.min(1245, personalIncome); // https://www.taxtips.ca/filing/canadaemployment.htm
+  const federalTax = Math.max(federalTaxBeforePersonalAmount - .15 * (12298 + canadaEmploymentAmountTaxCredit + payrollTaxes), 0); // https://www.taxtips.ca/taxrates/ab.htm
+
+  const provincialTaxBeforePersonalAmount = calculateProvincialTax(personalGrossedUpTotalIncome);
+  const provincialTax = Math.max(provincialTaxBeforePersonalAmount - .1 * (19369 + payrollTaxes), 0); // https://www.taxtips.ca/taxrates/ab.htm
+
+  const dividendTaxCredit = grossedUpDividendIncome * (0.090301 + 0.0218); // https://www.taxtips.ca/dtc/smallbusdtc.htm
+  const netTaxes = federalTax + provincialTax + payrollTaxes - dividendTaxCredit;
   const personalAfterTaxIncome = personalPreTaxIncome - netTaxes + corporateOtherExpenses;
 
   return (
@@ -111,19 +129,19 @@ const App = () => {
           </Stat>
           <Stat>
             <StatLabel>
-              Alberta Corporate Tax:
+              Alberta Corporate Tax (2020):
             </StatLabel>
             <StatNumber>${albertaCorporateTax.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
-              Federal Corporate Tax:
+              Federal Corporate Tax (2020):
             </StatLabel>
             <StatNumber>${federalCorporateTax.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
-              Total Corporate Tax:
+              Total Corporate Tax (2020):
             </StatLabel>
             <StatNumber>${corporateTax.toLocaleString()}</StatNumber>
           </Stat>
@@ -154,25 +172,31 @@ const App = () => {
           </Stat>
           <Stat>
             <StatLabel>
-              Federal Taxes:
+              Federal Taxes (2020):
             </StatLabel>
               <StatNumber>${federalTax.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
-              Provincial Taxes:
+              Alberta Taxes (2020):
             </StatLabel>
               <StatNumber>${provincialTax.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
-              Dividend Tax Credit:
+              CPP/EI (2020):
+            </StatLabel>
+              <StatNumber>${payrollTaxes.toLocaleString()}</StatNumber>
+          </Stat>
+          <Stat>
+            <StatLabel>
+              Dividend Tax Credit (2020):
             </StatLabel>
               <StatNumber>${dividendTaxCredit.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
-              Net Taxes:
+              Net Taxes (2020):
             </StatLabel>
               <StatNumber>${netTaxes.toLocaleString()}</StatNumber>
           </Stat>
@@ -190,8 +214,12 @@ const App = () => {
           </Stat>
           <Box pt={5}>
             <Stack spacing={2}>
-              <Badge variantColor={personalIncome > 52000 ? 'green' : 'red'}>{personalIncome > 52000 ? 'Maxes CPP benefits' : 'Does not max CPP benefits'}</Badge>
-              <Badge variantColor={personalIncome > 144000 ? 'green' : 'red'}>{personalIncome > 144000 ? 'Maxes RRSP headroom ($26,500)' : `Does not max RRSP headroom ($${(personalIncome * 0.18).toLocaleString()})`}</Badge>
+              {/* https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html */}
+              <Badge variantColor={personalIncome > maxCppAmount ? 'green' : 'red'}>{personalIncome > maxCppAmount ? 'Maxes CPP benefits' : 'Does not max CPP benefits'}</Badge>
+              {/* // https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html */}
+              <Badge variantColor={personalIncome > maxEiAmount ? 'green' : 'red'}>{personalIncome > maxEiAmount ? 'Maxes EI benefits' : 'Does not max EI benefits'}</Badge>
+              {/* https://www.canada.ca/en/revenue-agency/services/tax/registered-plans-administrators/pspa/mp-rrsp-dpsp-tfsa-limits-ympe.html */}
+              <Badge variantColor={personalIncome > 151277 ? 'green' : 'red'}>{personalIncome > 151277 ? 'Maxes RRSP headroom ($27,230)' : `Does not max RRSP headroom ($${(personalIncome * 0.18).toLocaleString()})`}</Badge>
             </Stack>
           </Box>
         </Container>
