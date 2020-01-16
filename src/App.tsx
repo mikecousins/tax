@@ -55,10 +55,16 @@ const App = () => {
   const [corporateOtherExpenses, setCorporateOtherExpenses] = useState(10000);
   const [personalIncome, setPersonalIncome] = useState(0);
 
-  const maxCppAmount = 58700; // https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html
   const maxEiAmount = 54200; // https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html
-  const maxSalary = corporateIncome - corporatePureExpenses - corporateOtherExpenses;
-  const corporateProfit = corporateIncome - corporatePureExpenses - corporateOtherExpenses - personalIncome;
+  const maxCppAmount = 58700; // https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html
+  const maxCppPremium = (maxCppAmount - 3500) * .0525;
+
+  const maxSalary = corporateIncome - corporatePureExpenses - corporateOtherExpenses - maxCppPremium;
+
+  // https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html
+  const cpp = Math.max(0, Math.min(personalIncome, maxCppAmount) - 3500) * .0525;
+
+  const corporateProfit = corporateIncome - corporatePureExpenses - corporateOtherExpenses - personalIncome - cpp; // Employer premium
   const albertaCorporateTax = corporateProfit * 0.02; // https://www.taxtips.ca/smallbusiness/corporatetax/corporate-tax-rates-2019.htm
   const federalCorporateTax = corporateProfit * 0.09; // https://www.taxtips.ca/smallbusiness/corporatetax/corporate-tax-rates-2019.htm
   const corporateTax = albertaCorporateTax + federalCorporateTax;
@@ -68,21 +74,20 @@ const App = () => {
   const personalGrossedUpTotalIncome = personalIncome + grossedUpDividendIncome;
   const personalPreTaxIncome = personalIncome + personalDividendIncome;
 
-  // https://www.canada.ca/en/revenue-agency/news/newsroom/tax-tips/tax-tips-2019/cra-announces-maximum-pensionable-earnings-2020.html
-  const cpp = Math.max(0, Math.min(personalIncome, maxCppAmount) - 3500) * .0525; // Should maybe be 2x this if corporation has to pay too? I think there was an exemption for that
+  // Assuming you own 40% of shares of corporation, you can opt out of paying EI: https://www.srjca.com/blog/cpp-and-ei-considerations-for-the-self-employed-business-owners-and-owner-managers/
   // https://www.canada.ca/en/employment-social-development/programs/ei/ei-list/reports/premium/rates2020.html
-  const ei = Math.max(0, Math.min(personalIncome, maxEiAmount)) * .0158; // Should be more if employer pays too?
-  const payrollTaxes = cpp + ei;
+  
+  // const ei = Math.max(0, Math.min(personalIncome, maxEiAmount)) * .0158;
 
   const federalTaxBeforePersonalAmount = calculateFederalTax(personalGrossedUpTotalIncome);
   const canadaEmploymentAmountTaxCredit = Math.min(1245, personalIncome); // https://www.taxtips.ca/filing/canadaemployment.htm
-  const federalTax = Math.max(federalTaxBeforePersonalAmount - .15 * (12298 + canadaEmploymentAmountTaxCredit + payrollTaxes), 0); // https://www.taxtips.ca/taxrates/ab.htm
+  const federalTax = Math.max(federalTaxBeforePersonalAmount - .15 * (12298 + canadaEmploymentAmountTaxCredit + cpp), 0); // https://www.taxtips.ca/taxrates/ab.htm
 
   const provincialTaxBeforePersonalAmount = calculateProvincialTax(personalGrossedUpTotalIncome);
-  const provincialTax = Math.max(provincialTaxBeforePersonalAmount - .1 * (19369 + payrollTaxes), 0); // https://www.taxtips.ca/taxrates/ab.htm
+  const provincialTax = Math.max(provincialTaxBeforePersonalAmount - .1 * (19369 + cpp), 0); // https://www.taxtips.ca/taxrates/ab.htm
 
   const dividendTaxCredit = grossedUpDividendIncome * (0.090301 + 0.0218); // https://www.taxtips.ca/dtc/smallbusdtc.htm
-  const netTaxes = federalTax + provincialTax + payrollTaxes - dividendTaxCredit;
+  const netTaxes = federalTax + provincialTax + cpp - dividendTaxCredit;
   const personalAfterTaxIncome = personalPreTaxIncome - netTaxes + corporateOtherExpenses;
 
   return (
@@ -121,6 +126,12 @@ const App = () => {
               />
             </Slider>
           </FormControl>
+          <Stat>
+            <StatLabel>
+              Employer CPP (2020) (Business Expense):
+            </StatLabel>
+            <StatNumber>${cpp.toLocaleString()}</StatNumber>
+          </Stat>
           <Stat>
             <StatLabel>
               Corporate Profit:
@@ -184,9 +195,9 @@ const App = () => {
           </Stat>
           <Stat>
             <StatLabel>
-              CPP/EI (2020):
+              Employee CPP (2020):
             </StatLabel>
-              <StatNumber>${payrollTaxes.toLocaleString()}</StatNumber>
+              <StatNumber>${cpp.toLocaleString()}</StatNumber>
           </Stat>
           <Stat>
             <StatLabel>
