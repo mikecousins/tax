@@ -6,7 +6,7 @@
     "@chakra-ui/core": "^0.5.2",
     "@emotion/core": "10.0.27",
     "@emotion/styled": "10.0.27",
-    "@reach/slider": "0.7.0",
+    "@reach/slider": "0.10.1",
     "emotion-theming": "^10.0.27",
     "prop-types": "15.7.2",
     "react": "16.12.0",
