@@ -1859,34 +1859,42 @@
     "@reach/component-component" "^0.1.3"
     "@reach/visually-hidden" "^0.1.4"
 
+"@reach/auto-id@0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@reach/auto-id/-/auto-id-0.11.2.tgz#c66a905c5401d1ac3da8d26165b8d27d6e778fa6"
+  integrity sha512-YZ21b0Kb88wJ0t7QjSznWOYskARQMnmXY9Y2XZ5RyYcZ2krT4s3+ghghpfaPs6BKcrZDonZCrU65OFDJPa1jAw==
+  dependencies:
+    "@reach/utils" "0.11.2"
+    tslib "^2.0.0"
+
 "@reach/auto-id@0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@reach/auto-id/-/auto-id-0.2.0.tgz#97f9e48fe736aa5c6f4f32cf73c1f19d005f8550"
   integrity sha512-lVK/svL2HuQdp7jgvlrLkFsUx50Az9chAhxpiPwBqcS83I2pVWvXp98FOcSCCJCV++l115QmzHhFd+ycw1zLBg==
-
-"@reach/auto-id@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@reach/auto-id/-/auto-id-0.7.0.tgz#da7f11c11bc5aff809ccec9706a9f5d8da6052dd"
-  integrity sha512-8NU8NKItNBBscC7qsTvRFCxtHMzBy/wFTrPkAVqraUxfEhNc4UnA4vr1XsduTNfHRwr262+NbDTSeO9EqTRIjA==
 
 "@reach/component-component@^0.1.3":
   version "0.1.3"
   resolved "https://registry.yarnpkg.com/@reach/component-component/-/component-component-0.1.3.tgz#5d156319572dc38995b246f81878bc2577c517e5"
   integrity sha512-a1USH7L3bEfDdPN4iNZGvMEFuBfkdG+QNybeyDv8RloVFgZYRoM+KGXyy2KOfEnTUM8QWDRSROwaL3+ts5Angg==
 
-"@reach/slider@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@reach/slider/-/slider-0.7.0.tgz#ee945582b9a990574321d5190841cbcc4571e374"
-  integrity sha512-IlGp90+65aA0LF93Z+HPxDSSSPbOLZMJx2wjsOMbN+Hk7vne9Ov3IUP/2vMhmh0lc4bIUoUlTbc87hmkWL/Slw==
+"@reach/slider@0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@reach/slider/-/slider-0.11.2.tgz#3cc08ea3d3d3e6b04c135df22ee7fcf3c6d9073e"
+  integrity sha512-89nsJpjwfUFVGH/ff6PbJoF3SdcX2Pw9fDHU0XkCiQK3ngPdAI0WLPGauu+qMJL6khwaQVJPL9Yb4HwXDUFCWA==
   dependencies:
-    "@reach/auto-id" "^0.7.0"
-    "@reach/utils" "^0.7.0"
-    warning "^4.0.3"
+    "@reach/auto-id" "0.11.2"
+    "@reach/utils" "0.11.2"
+    prop-types "15.7.2"
+    tslib "^2.0.0"
 
-"@reach/utils@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.7.0.tgz#d089552bee11b9900cb8b54d4f151362a509eb54"
-  integrity sha512-sqPUQzpA+ofGd+38kZ3PylG5NrsbPCP6U+W5+YOrrxGDobX04807ofNRrq30unGo1ueIBzwcm5C5pu33FshpmQ==
+"@reach/utils@0.11.2":
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/@reach/utils/-/utils-0.11.2.tgz#be1f03650db56fd67a16d3fc70e5262cdb139cec"
+  integrity sha512-fBTolYj+rKTROXmf0zHO0rCWSvw7J0ALmYj5QxW4DmITMOH5uyRuWDWOfqohIGFbOtF/sum50WTB3tvx76d+Aw==
+  dependencies:
+    "@types/warning" "^3.0.0"
+    tslib "^2.0.0"
+    warning "^4.0.3"
 
 "@reach/visually-hidden@^0.1.4":
   version "0.1.4"
@@ -2235,6 +2243,11 @@
   integrity sha512-LulwelnGe9yU95yDqB+g9uD0gAn1S3KQyWWKXAOl6uwWtd4lS+q+oGlyHENL+m5zYBNbM5Qi1zoYYLelW29/pg==
   dependencies:
     csstype "^2.6.4"
+
+"@types/warning@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/warning/-/warning-3.0.0.tgz#0d2501268ad8f9962b740d387c4654f5f8e23e52"
+  integrity sha1-DSUBJorY+ZYrdA04fEZU9fjiPlI=
 
 "@types/yargs-parser@*":
   version "13.1.0"
@@ -10927,6 +10940,11 @@ tslib@^1.0.0, tslib@^1.8.1, tslib@^1.9.0, tslib@^1.9.3:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
+
+tslib@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
+  integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
 
 tsutils@^3.17.1:
   version "3.17.1"
